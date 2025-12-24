@@ -33,11 +33,11 @@ php artisan serve
 ## 📁 Project Structure
 ```
 Models/
-├── Store          # Stores
-├── Product        # Products
-├── ProductVariation # Variations
-├── Attribute      # Attributes
-└── AttributeValue # Values
+├── Store          
+├── Product        
+├── ProductVariation
+├── Attribute      
+└── AttributeValue
 ```
 
 ## 🎯 Learning Goals
