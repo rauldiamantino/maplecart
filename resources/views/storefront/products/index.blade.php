@@ -9,12 +9,12 @@
         @foreach ($products as $product)
             <div class="flex flex-col border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div class="h-48 bg-gray-100 rounded-t-lg flex items-center justify-center">
-                    <span class="text-gray-400">Imagem</span>
+                    <span class="text-gray-400">Image</span>
                 </div>
 
                 <div class="flex-1 p-4 flex flex-col">
                     <div class="flex-1">
-                        <h3 class="font-semibold text-lg line-clamp-2">{{ $product->name }}</h3>
+                        <h3 class="font-semibold text-lg line-clamp-2">{{ ucfirst($product->name) }}</h3>
                         <p class="text-xl font-bold mt-2 text-green-700">{{ $product->display_price }}</p>
                     </div>
 

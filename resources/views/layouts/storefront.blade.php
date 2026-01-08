@@ -7,9 +7,11 @@
     @vite('resources/css/app.css')
     <title>Store - @yield('title')</title>
 </head>
-<body class="w-screen">
+<body class="bg-black text-white w-screen">
     <div class="mx-auto container">
         @yield('content')
     </div>
+
+    @stack('scripts')
 </body>
 </html>

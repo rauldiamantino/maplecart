@@ -17,6 +17,28 @@ class ProductVariationSeeder extends Seeder
         Product::where('type', 'variable')
             ->with(['store.attributesWithValues'])
             ->each(function (Product $product) {
+                $attributes = $product->store
+                    ->attributes()
+                    ->with('values')
+                    ->get();
+
+                if ($attributes->isEmpty()) {
+                    $product->update([
+                        'type' => 'simple',
+                        'price' => fake()->randomFloat(2, 10, 300),
+                        'quantity' => fake()->numberBetween(1, 100),
+                    ]);
+
+                    return;
+                }
+
+
+                // 🔒 Define o padrão de variações UMA VEZ por produto
+                $schemaAttributes = $attributes
+                    ->shuffle()
+                    ->take(fake()->numberBetween(2, min(3, $attributes->count())))
+                    ->values();
+
                 $variationsCount = fake()->numberBetween(2, 6);
 
                 for ($i = 1; $i <= $variationsCount; $i++) {
@@ -24,24 +46,16 @@ class ProductVariationSeeder extends Seeder
                         ->forProduct($product, $i)
                         ->create();
 
-                    $this->attachAttributes($variation, $product->store);
+                    // 🔒 Todos os SKUs usam o MESMO padrão
+                    $this->attachAttributesFromSchema($variation, $schemaAttributes);
                 }
             });
     }
 
-    private function attachAttributes(ProductVariation $variation, Store $store): void
+
+    private function attachAttributesFromSchema(ProductVariation $variation, $schemaAttributes): void
     {
-        $attributes = $store->attributesWithValues;
-
-        if ($attributes->isEmpty()) {
-            return;
-        }
-
-        $selectedAttributes = $attributes
-            ->shuffle()
-            ->take(fake()->numberBetween(1, min(2, $attributes->count())));
-
-        foreach ($selectedAttributes as $attribute) {
+        foreach ($schemaAttributes as $attribute) {
 
             if ($attribute->values->isEmpty()) {
                 continue;

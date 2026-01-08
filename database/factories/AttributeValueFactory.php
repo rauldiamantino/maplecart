@@ -14,6 +14,7 @@ class AttributeValueFactory extends Factory
     public const VALUES_BY_ATTRIBUTE = [
         'color' => ['red', 'blue', 'green', 'black'],
         'size' => ['S', 'M', 'L', 'XL'],
+        'material' => ['cotton1', 'cotton2', 'cotton3', 'cotton4'],
     ];
 
     /**
